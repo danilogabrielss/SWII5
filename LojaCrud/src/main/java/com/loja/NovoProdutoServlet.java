@@ -9,7 +9,7 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-@WebServlet(urlPatterns = "/novoProduto")
+@WebServlet("/novoProduto")
 public class NovoProdutoServlet extends HttpServlet {
 
 	/*
@@ -18,7 +18,7 @@ public class NovoProdutoServlet extends HttpServlet {
 
 	private static final long serialVersionUID = 1L;
 
-	protected void doPost(HttpServletRequest request, HttpServletResponse response)
+	protected void deGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
 
 		System.out.println("Cadastrando novo Produto");
