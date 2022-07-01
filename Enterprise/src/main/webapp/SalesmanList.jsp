@@ -7,11 +7,14 @@
 <title>Salesman</title>
 </head>
 <body>
+
 	<div align="center">
 		<h1>Salesman Management</h1>
 		<h2>
-			<a href="newSalesman">Add New Salesman</a> &nbsp;&nbsp;&nbsp; 
-			<a href="listSalesman">Salesman	All Books</a> &nbsp;&nbsp;&nbsp; 
+			<a href="index">Back to Index</a> &nbsp;&nbsp;&nbsp;
+		
+			<a href="newSalesman">Add New Salesman</a> &nbsp;&nbsp;&nbsp; <a
+				href="listSalesman">List All Salesman</a> &nbsp;&nbsp;&nbsp;
 			<!-- <a href="creditos">Creditos</a>-->
 
 		</h2>
@@ -26,15 +29,15 @@
 				<th>Comissão</th>
 				<th>Actions</th>
 			</tr>
-			<c:forEach items="${list}" var="salesman">
+			<c:forEach items="${salesmanList}" var="salesman">
 				<tr>
 					<td><c:out value="${salesman.id}" /></td>
 					<td><c:out value="${salesman.name}" /></td>
 					<td><c:out value="${salesman.city}" /></td>
 					<td><c:out value="${salesman.commission}" /></td>
 					<td><a href="editSalesman?id=<c:out value='${salesman.id}'/>">Edit</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; 
-						<a href="deleteSalesman?id=<c:out value='${salesman.id}' />">Delete</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; <a
+						href="deleteSalesman?id=<c:out value='${salesman.id}' />">Delete</a>
 					</td>
 				</tr>
 			</c:forEach>

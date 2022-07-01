@@ -7,14 +7,14 @@ import java.util.List;
 import net.javaguides.maven_web_project.model.Costumer;
 import net.javaguides.maven_web_project.model.Salesman;
 
-public class SalesmanDao {
+public class CostumerDao {
 
 	private String jdbcURL;
 	private String jdbcUsername;
 	private String jdbcPassword;
 	private Connection jdbcConnection;
 
-	public SalesmanDao(String jdbcURL, String jdbcUsername, String jdbcPassword) {
+	public CostumerDao(String jdbcURL, String jdbcUsername, String jdbcPassword) {
 			this.jdbcURL = jdbcURL;
 			this.jdbcUsername = jdbcUsername;
 			this.jdbcPassword = jdbcPassword;
@@ -37,10 +37,11 @@ public class SalesmanDao {
 		}
 	}
 
-	public List<Salesman> listAllSales() throws SQLException {
-		List<Salesman> listSalesman = new ArrayList<>();
 
-		String sql = "SELECT * FROM Salesman;";
+	public List<Costumer> listAllCostumer() throws SQLException {
+		List<Costumer> listCostumer = new ArrayList<>();
+
+		String sql = "SELECT * FROM Costumers";
 
 		connect();
 
@@ -48,13 +49,14 @@ public class SalesmanDao {
 		ResultSet resultSet = statement.executeQuery(sql);
 
 		while (resultSet.next()) {
-			int id = resultSet.getInt("SALESMAN_ID");
-			String name = resultSet.getString("NAME");
+			int id = resultSet.getInt("COSTUMER_ID");
+			String name = resultSet.getString("CUST_NAME");
 			String city = resultSet.getString("CITY");
-			double commision = resultSet.getDouble("COMMISSION");
+			int grade = resultSet.getInt("GRADE");
+			int salesmanId = resultSet.getInt("SALESMAN_ID");
 
-			Salesman salesman = new Salesman(id, name, city, commision);
-			listSalesman.add(salesman);
+			Costumer costumer = new Costumer(id, name, city, grade, salesmanId);
+			listCostumer.add(costumer);
 		}
 
 		resultSet.close();
@@ -62,12 +64,12 @@ public class SalesmanDao {
 
 		disconnect();
 
-		return listSalesman;
+		return listCostumer;
 	}
 
-	public Salesman getSalesman(int id) throws SQLException {
-		Salesman salesman = null;
-		String sql = "SELECT * FROM Salesman WHERE salesman_id = ?";
+	public Costumer getCostumer(int id) throws SQLException {
+		Costumer costumer = null;
+		String sql = "SELECT * FROM Costumer WHERE costumer_id = ?";
 		
 		connect();
 		
@@ -77,29 +79,31 @@ public class SalesmanDao {
 		ResultSet resultSet = statement.executeQuery();
 		
 		if (resultSet.next()) {
-			String name = resultSet.getString("name");
+			String custName = resultSet.getString("custName");
 			String city = resultSet.getString("city");
-			float commission = resultSet.getFloat("commission");
+			int grade = resultSet.getInt("grade");
+			int salesmanId = resultSet.getInt("salesmanId");
 			
-			salesman = new Salesman(id, name, city, commission);
+			costumer = new Costumer(id, custName, city, grade, salesmanId);
 		}
 		
 		resultSet.close();
 		statement.close();
 		
-		return salesman;
+		return costumer;
 	}
 	
-	public boolean updateSalesman(Salesman salesman) throws SQLException {
-		String sql = "UPDATE Salesman SET name = ?, city = ?, commission = ?";
-		sql += " WHERE salesman_id = ?";
+	public boolean updateCostumer(Costumer costumer) throws SQLException {
+		String sql = "UPDATE Costumer SET custName = ?, city = ?, grade = ?, salesman_id = ?";
+		sql += " WHERE costumer_id = ?";
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setString(1, salesman.getName());
-		statement.setString(2, salesman.getCity());
-		statement.setDouble(3, salesman.getCommission());
-		statement.setInt(4, salesman.getId());
+		statement.setString(1, costumer.getCustName());
+		statement.setString(2, costumer.getCity());
+		statement.setInt(3, costumer.getGrade());		
+		statement.setInt(4, costumer.getSalesmanId());
+		statement.setInt(5, costumer.getId());
 		
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
@@ -107,14 +111,16 @@ public class SalesmanDao {
 		return rowUpdated;		
 	}
 	
-	public boolean insertSalesman(Salesman salesman) throws SQLException {
-		String sql = "INSERT INTO Salesman (name, city, commission) VALUES (?, ?, ?)";
+	public boolean insertCostumer(Costumer costumer) throws SQLException {
+		String sql = "INSERT INTO book (custName, city, grade, salesman_id) VALUES (?, ?, ?, ?)";
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setString(1, salesman.getName());
-		statement.setString(2, salesman.getCity());
-		statement.setDouble(3, salesman.getCommission());
+		statement.setString(1, costumer.getCustName());
+		statement.setString(2, costumer.getCity());
+		statement.setInt(3, costumer.getGrade());
+		statement.setInt(4, costumer.getSalesmanId());
+
 		
 		boolean rowInserted = statement.executeUpdate() > 0;
 		statement.close();
@@ -122,18 +128,19 @@ public class SalesmanDao {
 		return rowInserted;
 	}
 	
-	public boolean deleteSalesman(Salesman salesman) throws SQLException {
-		String sql = "DELETE FROM Salesman where salesman_id = ?";
+	public boolean deleteCostumer(Costumer costumer) throws SQLException {
+		String sql = "DELETE FROM Costumer where costumer_id = ?";
 		
 		connect();
 		
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
-		statement.setInt(1, salesman.getId());
+		statement.setInt(1, costumer.getId());
 		
 		boolean rowDeleted = statement.executeUpdate() > 0;
 		statement.close();
 		disconnect();
 		return rowDeleted;		
 	}
+	
 	
 }

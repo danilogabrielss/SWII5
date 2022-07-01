@@ -28,10 +28,10 @@
             <caption>
                 <h2>
                     <c:if test="${salesman != null}">
-                        Edit Book
+                        Edit Salesman
                     </c:if>
                     <c:if test="${salesman == null}">
-                        Add New Book
+                        Add New Salesman
                     </c:if>
                 </h2>
             </caption>
