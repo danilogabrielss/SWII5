@@ -14,15 +14,13 @@ import javax.servlet.http.HttpServletResponse;
 import net.javaguides.maven_web_project.dao.SalesmanDao;
 import net.javaguides.maven_web_project.model.Salesman;
 
-@WebServlet(urlPatterns = "/salesman")
-public class SalesmanServlet extends HttpServlet {
+public class SalesmanServlet {
 
-	private static final long serialVersionUID = 1L;
+	//private static final long serialVersionUID = 1L;
 	
 	private SalesmanDao salesmanDao;
 
-	@Override
-	protected void doGet(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
+	protected void getList(HttpServletRequest request, HttpServletResponse response) throws IOException, ServletException {
 		List<Salesman> salesmanList = null;
 		try {
 			salesmanList = salesmanDao.listAllSales();

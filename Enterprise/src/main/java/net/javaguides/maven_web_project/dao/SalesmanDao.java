@@ -39,7 +39,7 @@ public class SalesmanDao {
 	public List<Salesman> listAllSales() throws SQLException {
 		List<Salesman> listSalesman = new ArrayList<>();
 
-		String sql = "SELECT * FROM salesman";
+		String sql = "SELECT * FROM Salesman;";
 
 		connect();
 
@@ -48,11 +48,11 @@ public class SalesmanDao {
 
 		while (resultSet.next()) {
 			int id = resultSet.getInt("SALESMAN_ID");
-			String nome = resultSet.getString("NAME");
-			String cidade = resultSet.getString("CITY ");
-			int comissao = resultSet.getInt("COMMISSION");
+			String name = resultSet.getString("NAME");
+			String city = resultSet.getString("CITY");
+			double commision = resultSet.getDouble("COMMISSION");
 
-			Salesman salesman = new Salesman(id, nome, cidade, comissao);
+			Salesman salesman = new Salesman(id, name, city, commision);
 			listSalesman.add(salesman);
 		}
 
@@ -64,4 +64,75 @@ public class SalesmanDao {
 		return listSalesman;
 	}
 
+	public Salesman getSalesman(int id) throws SQLException {
+		Salesman salesman = null;
+		String sql = "SELECT * FROM Salesman WHERE salesman_id = ?";
+		
+		connect();
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, id);
+		
+		ResultSet resultSet = statement.executeQuery();
+		
+		if (resultSet.next()) {
+			String name = resultSet.getString("name");
+			String city = resultSet.getString("city");
+			float commission = resultSet.getFloat("commission");
+			
+			salesman = new Salesman(id, name, city, commission);
+		}
+		
+		resultSet.close();
+		statement.close();
+		
+		return salesman;
+	}
+	
+	public boolean updateSalesman(Salesman salesman) throws SQLException {
+		String sql = "UPDATE Salesman SET name = ?, city = ?, commission = ?";
+		sql += " WHERE salesman_id = ?";
+		connect();
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setString(1, salesman.getName());
+		statement.setString(2, salesman.getCity());
+		statement.setDouble(3, salesman.getCommission());
+		statement.setInt(4, salesman.getId());
+		
+		boolean rowUpdated = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowUpdated;		
+	}
+	
+	public boolean insertSalesman(Salesman salesman) throws SQLException {
+		String sql = "INSERT INTO book (name, city, commission) VALUES (?, ?, ?)";
+		connect();
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setString(1, salesman.getName());
+		statement.setString(2, salesman.getCity());
+		statement.setDouble(3, salesman.getCommission());
+		
+		boolean rowInserted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowInserted;
+	}
+	
+	public boolean deleteSalesman(Salesman salesman) throws SQLException {
+		String sql = "DELETE FROM Salesman where salesman_id = ?";
+		
+		connect();
+		
+		PreparedStatement statement = jdbcConnection.prepareStatement(sql);
+		statement.setInt(1, salesman.getId());
+		
+		boolean rowDeleted = statement.executeUpdate() > 0;
+		statement.close();
+		disconnect();
+		return rowDeleted;		
+	}
+	
 }

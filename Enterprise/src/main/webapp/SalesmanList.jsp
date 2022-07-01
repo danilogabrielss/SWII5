@@ -1,12 +1,20 @@
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+
 <html>
 <head>
 <title>Salesman</title>
 </head>
-<body>	
+<body>
 	<div align="center">
+		<h1>Salesman Management</h1>
+		<h2>
+			<a href="newSalesman">Add New Salesman</a> &nbsp;&nbsp;&nbsp; 
+			<a href="listSalesman">Salesman	All Books</a> &nbsp;&nbsp;&nbsp; 
+			<!-- <a href="creditos">Creditos</a>-->
+
+		</h2>
 		<table border="1" cellpadding="5">
 			<caption>
 				<h2>Salesman List</h2>
@@ -16,16 +24,18 @@
 				<th>Nome</th>
 				<th>Cidade</th>
 				<th>Comissão</th>
+				<th>Actions</th>
 			</tr>
-			<c:forEach var="book" items="${salesmanList}">
+			<c:forEach items="${list}" var="salesman">
 				<tr>
-					<td><c:out value="${salesmanList.id}" /></td>
-					<td><c:out value="${salesmanList.name}" /></td>
-					<td><c:out value="${salesmanList.city}" /></td>
-					<td><c:out value="${salesmanList.commission}" /></td>
-					<td><a href="edit?id=<c:out value='${salesmanList.id}' />">Edit</a>
-						&nbsp;&nbsp;&nbsp;&nbsp; <a
-						href="delete?id=<c:out value='${salesmanList.id}' />">Delete</a></td>
+					<td><c:out value="${salesman.id}" /></td>
+					<td><c:out value="${salesman.name}" /></td>
+					<td><c:out value="${salesman.city}" /></td>
+					<td><c:out value="${salesman.commission}" /></td>
+					<td><a href="editSalesman?id=<c:out value='${salesman.id}'/>">Edit</a>
+						&nbsp;&nbsp;&nbsp;&nbsp; 
+						<a href="deleteSalesman?id=<c:out value='${salesman.id}' />">Delete</a>
+					</td>
 				</tr>
 			</c:forEach>
 		</table>

@@ -22,11 +22,11 @@
 
 	 <servlet>
 		<servlet-name>ControllerServlet</servlet-name>
-		<servlet-class>net.javaguides.maven_web_project.controller.SalesmanServlet</servlet-class>
+		<servlet-class>net.javaguides.maven_web_project.controller.ControllerServlet</servlet-class>
 	</servlet>
 
 	<servlet-mapping>
-		<servlet-name>SalesmanServlet</servlet-name>
+		<servlet-name>ControllerServlet</servlet-name>
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
