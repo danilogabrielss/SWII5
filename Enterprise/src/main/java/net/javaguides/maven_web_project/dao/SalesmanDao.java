@@ -4,7 +4,6 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-import net.javaguides.maven_web_project.model.Costumer;
 import net.javaguides.maven_web_project.model.Salesman;
 
 public class SalesmanDao {

@@ -53,6 +53,9 @@ public class ControllerServlet extends HttpServlet {
 			case "/index":
 				index(request, response);
 				break;
+			case "/listAll":
+				listAll(request, response);
+				break;
 			// Salesman
 			case "/listSalesman":
 				listSalesman(request, response);
@@ -128,6 +131,21 @@ public class ControllerServlet extends HttpServlet {
 	private void index(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
 		RequestDispatcher dispatcher = request.getRequestDispatcher("Index.jsp");
+		dispatcher.forward(request, response);
+	}
+	
+	private void listAll(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<Salesman> salesmanList = salesmanDao.listAllSales();
+		request.setAttribute("salesmanList", salesmanList);
+		
+		List<Customer> customerList = customerDao.listAllCustomer();
+		request.setAttribute("customerList", customerList);
+		
+		List<Orders> ordersList = ordersDao.listAllOrders();
+		request.setAttribute("ordersList", ordersList);
+		
+		RequestDispatcher dispatcher = request.getRequestDispatcher("ListAll.jsp");
 		dispatcher.forward(request, response);
 	}
 
@@ -279,14 +297,15 @@ public class ControllerServlet extends HttpServlet {
 
 	private void updateOrders(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
-		/*int ordNo = Integer.parseInt(request.getParameter("ordNo"));
+		int ordNo = Integer.parseInt(request.getParameter("ordNo"));
+
 		double purchase = Double.parseDouble(request.getParameter("purchase"));
-		Date ordDate = Date.parse(request.getParameter("ordDate"));
+		String ordDate = (request.getParameter("ordDate"));
 		int costumerId = Integer.parseInt(request.getParameter("costumerId"));
 		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
 
 		Orders orders = new Orders(ordNo, purchase, ordDate, costumerId, salesmanId);
-		ordersDao.updateOrders(orders);*/
+		ordersDao.updateOrders(orders);
 		response.sendRedirect("listOrders");
 	}
 
@@ -299,7 +318,7 @@ public class ControllerServlet extends HttpServlet {
 
 		Orders newOrders = new Orders(purchase, ordDate, costumerId, salesmanId);
 		ordersDao.insertOrders(newOrders);
-		response.sendRedirect("listCustomer");
+		response.sendRedirect("listOrders");
 	}
 
 	private void deleteOrders(HttpServletRequest request, HttpServletResponse response)
@@ -308,7 +327,7 @@ public class ControllerServlet extends HttpServlet {
 
 		Orders orders = new Orders(ordNo);
 		ordersDao.deleteOrders(orders);
-		response.sendRedirect("listCustomer");
+		response.sendRedirect("listOrders");
 	}
 		
 	

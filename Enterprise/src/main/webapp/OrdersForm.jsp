@@ -41,7 +41,7 @@
             <tr>
                 <th>Purchase: </th>
                 <td>
-                    <input type="text" name="purchase" size="45"
+                    <input type="number" name="purchase" size="45"
                             value="<c:out value='${orders.purchase}' />"
                         />
                 </td>
@@ -57,8 +57,8 @@
             <tr>
                 <th>Costumer Id: </th>
                 <td>
-                    <input type="number" name="costumerId" size="5"
-                            value="<c:out value='${orders.costumerId}' />"
+                    <input type="number" name="customerId" size="5"
+                            value="<c:out value='${orders.customerId}' />"
                     />
                 </td>
             </tr>

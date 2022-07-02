@@ -79,7 +79,7 @@ public class OrdersDao {
 		if (resultSet.next()) {
 			double purchase = resultSet.getDouble("purch_amt");
 			String ordDate = resultSet.getString("ord_Date");
-			int costumerId = resultSet.getInt("costumer_Id");
+			int costumerId = resultSet.getInt("customer_Id");
 			int salesmanId = resultSet.getInt("salesman_Id");
 
 			orders = new Orders(ordNo, purchase, ordDate, costumerId, salesmanId);
@@ -101,7 +101,7 @@ public class OrdersDao {
 		statement.setString(2, orders.getOrdDate());
 		statement.setInt(3, orders.getCustomerId());
 		statement.setInt(4, orders.getSalesmanId());
-		statement.setInt(4, orders.getOrdNo());
+		statement.setInt(5, orders.getOrdNo());
 
 		boolean rowUpdated = statement.executeUpdate() > 0;
 		statement.close();
@@ -110,7 +110,7 @@ public class OrdersDao {
 	}
 
 	public boolean insertOrders(Orders orders) throws SQLException {
-		String sql = "INSERT INTO Orders (purch_amt, ord_Date, costumer_id, salesman_id) VALUES (?, ?, ?, ?)";
+		String sql = "INSERT INTO Orders (purch_amt, ord_Date, customer_id, salesman_id) VALUES (?, ?, ?, ?)";
 		connect();
 
 		PreparedStatement statement = jdbcConnection.prepareStatement(sql);

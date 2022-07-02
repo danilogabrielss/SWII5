@@ -34,7 +34,7 @@
 					<td><c:out value="${orders.ordNo}" /></td>
 					<td><c:out value="${orders.purchase}" /></td>
 					<td><c:out value="${orders.ordDate}" /></td>
-					<td><c:out value="${orders.costumerId}" /></td>
+					<td><c:out value="${orders.customerId}" /></td>
 					<td><c:out value="${orders.salesmanId}" /></td>
 					<td><a href="editOrders?ordNo=<c:out value='${orders.ordNo}'/>">Edit</a>
 						&nbsp;&nbsp;&nbsp;&nbsp; <a

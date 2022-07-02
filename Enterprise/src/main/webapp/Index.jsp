@@ -13,6 +13,8 @@
 			<a	href="listSalesman">List All Salesman</a>
 			<a	href="listCustomer">List All Costumer</a>
 			<a	href="listOrders">List All Order's</a>
+			<a	href="listAll">List All </a>
+			
 
 </body>
 </html>
