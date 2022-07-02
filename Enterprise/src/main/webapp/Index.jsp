@@ -18,6 +18,11 @@
 			<a	href="listOrders">List All Order's</a></br>
 			<a	href="listAll">List All </a>
 	</h2>
+			<h1>Dupla</h1>
+	<h2>
+			Danilo Gabriel - cb3011798</br>
+			Gabriel Silva - cb3010635
+	</h2>
 </div>
 </body>
 </html>

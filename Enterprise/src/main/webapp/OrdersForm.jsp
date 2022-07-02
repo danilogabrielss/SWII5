@@ -36,7 +36,7 @@
                 </h2>
             </caption>
                 <c:if test="${orders != null}">
-                    <input type="hidden" name="id" value="<c:out value='${orders.ordNo}' />" />
+                    <input type="hidden" name="ordNo" value="<c:out value='${orders.ordNo}' />" />
                 </c:if>           
             <tr>
                 <th>Purchase: </th>

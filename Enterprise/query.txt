@@ -1,0 +1,33 @@
+create database Enterprise;
+
+use Enterprise;
+CREATE TABLE `salesman` ( 
+`SALESMAN_ID` int NOT NULL AUTO_INCREMENT, 
+NAME varchar ( 30 ), 
+CITY varchar ( 15 ) ,
+COMMISSION decimal ( 5,2 ),
+PRIMARY KEY (salesman_id) 
+ ); 
+
+use Enterprise;
+CREATE TABLE CUSTOMER ( 
+CUSTOMER_ID int NOT NULL AUTO_INCREMENT, 
+CUST_NAME varchar(50),
+CITY varchar ( 15 ),
+GRADE numeric ( 3 ), 
+SALESMAN_ID int NOT NULL,
+primary key (CUSTOMER_ID),
+foreign key (SALESMAN_ID) REFERENCES Salesman (SALESMAN_ID)
+);
+
+use Enterprise;
+CREATE TABLE `orders` ( 
+`ORD_NO` int NOT NULL AUTO_INCREMENT, 
+PURCH_AMT decimal (8,2),
+ORD_DATE date,
+SALESMAN_ID int NOT NULL,
+CUSTOMER_ID int NOT NULL,
+PRIMARY KEY (ORD_no),
+foreign key (SALESMAN_ID) REFERENCES Salesman (SALESMAN_ID),
+foreign key (CUSTOMER_ID) REFERENCES CUSTOMER (CUSTOMER_ID)
+ ); 

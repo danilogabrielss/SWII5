@@ -330,12 +330,4 @@ public class ControllerServlet extends HttpServlet {
 		response.sendRedirect("listOrders");
 	}
 		
-	
-	/*
-	 * private void abrirCreditos(HttpServletRequest request, HttpServletResponse
-	 * response) throws IOException, ServletException { RequestDispatcher dispatcher
-	 * = request.getRequestDispatcher("creditos.jsp"); dispatcher.forward(request,
-	 * response); }
-	 */
-
 }
