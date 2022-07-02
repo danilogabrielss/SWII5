@@ -301,10 +301,10 @@ public class ControllerServlet extends HttpServlet {
 
 		double purchase = Double.parseDouble(request.getParameter("purchase"));
 		String ordDate = (request.getParameter("ordDate"));
-		int costumerId = Integer.parseInt(request.getParameter("costumerId"));
+		int customerId = Integer.parseInt(request.getParameter("customerId"));
 		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
 
-		Orders orders = new Orders(ordNo, purchase, ordDate, costumerId, salesmanId);
+		Orders orders = new Orders(ordNo, purchase, ordDate, customerId, salesmanId);
 		ordersDao.updateOrders(orders);
 		response.sendRedirect("listOrders");
 	}
@@ -313,10 +313,10 @@ public class ControllerServlet extends HttpServlet {
 			throws SQLException, IOException {
 		double purchase = Double.parseDouble(request.getParameter("purchase"));
 		String ordDate = (request.getParameter("ordDate"));
-		int costumerId = Integer.parseInt(request.getParameter("costumerId"));
+		int customerId = Integer.parseInt(request.getParameter("customerId"));
 		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
 
-		Orders newOrders = new Orders(purchase, ordDate, costumerId, salesmanId);
+		Orders newOrders = new Orders(purchase, ordDate, customerId, salesmanId);
 		ordersDao.insertOrders(newOrders);
 		response.sendRedirect("listOrders");
 	}

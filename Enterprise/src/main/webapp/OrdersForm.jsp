@@ -55,7 +55,7 @@
                 </td>
             </tr>
             <tr>
-                <th>Costumer Id: </th>
+                <th>Customer Id: </th>
                 <td>
                     <input type="number" name="customerId" size="5"
                             value="<c:out value='${orders.customerId}' />"

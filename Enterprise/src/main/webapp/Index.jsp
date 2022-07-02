@@ -9,12 +9,15 @@
 <title>List All</title>
 </head>
 <body>
+<div align="center">
+	<h1>Welcome to Enterprise</h1>
 
-			<a	href="listSalesman">List All Salesman</a>
-			<a	href="listCustomer">List All Costumer</a>
-			<a	href="listOrders">List All Order's</a>
+	<h2>
+			<a	href="listSalesman">List All Salesman</a></br>
+			<a	href="listCustomer">List All Costumer</a></br>
+			<a	href="listOrders">List All Order's</a></br>
 			<a	href="listAll">List All </a>
-			
-
+	</h2>
+</div>
 </body>
 </html>

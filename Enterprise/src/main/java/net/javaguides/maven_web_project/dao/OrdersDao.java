@@ -79,10 +79,10 @@ public class OrdersDao {
 		if (resultSet.next()) {
 			double purchase = resultSet.getDouble("purch_amt");
 			String ordDate = resultSet.getString("ord_Date");
-			int costumerId = resultSet.getInt("customer_Id");
+			int customerId = resultSet.getInt("customer_Id");
 			int salesmanId = resultSet.getInt("salesman_Id");
 
-			orders = new Orders(ordNo, purchase, ordDate, costumerId, salesmanId);
+			orders = new Orders(ordNo, purchase, ordDate, customerId, salesmanId);
 		}
 
 		resultSet.close();
