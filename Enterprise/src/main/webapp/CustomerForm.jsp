@@ -11,58 +11,58 @@
 <body>
 
 	<center>
-		<h1>Salesman Management</h1>
+		<h1>Customer Management</h1>
 		<h2>
 			<a href="index">Back to Index</a> &nbsp;&nbsp;&nbsp; 
-			<a	href="newCostumer">Add New Costumer</a> &nbsp;&nbsp;&nbsp; 
-			<a	href="listSalesman">List All Costumer</a>
+			<a	href="newCustomer">Add New Customer</a> &nbsp;&nbsp;&nbsp; 
+			<a	href="listCustomer">List All Customer</a>
 
 		</h2>
 	</center>
 	<div align="center">
 		<c:if test="${costumer != null}">
-			<form action="updateCostumer" method="post">
+			<form action="updateCustomer" method="post">
 		</c:if>
 		<c:if test="${costumer == null}">
-			<form action="insertCostumer" method="post">
+			<form action="insertCustomer" method="post">
 		</c:if>
 		<table border="1" cellpadding="5">
 			<caption>
 				<h2>
-					<c:if test="${costumer != null}">
+					<c:if test="${customer != null}">
                         Edit Costumer
                     </c:if>
-					<c:if test="${costumer == null}">
+					<c:if test="${customer == null}">
                         Add New Costumer
                     </c:if>
 				</h2>
 			</caption>
-			<c:if test="${salesman != null}">
+			<c:if test="${customer != null}">
 				<input type="hidden" name="id"
-					value="<c:out value='${costumer.id}' />" />
+					value="<c:out value='${customer.id}' />" />
 			</c:if>
 			<tr>
 				<th>Nome:</th>
-				<td><input type="text" name="name" size="45"
-					value="<c:out value='${costumer.name}' />" />
+				<td><input type="text" name="custName" size="45"
+					value="<c:out value='${customer.custName}' />" />
 				</td>
 			</tr>
 			<tr>
 				<th>Cidade:</th>
 				<td><input type="text" name="city" size="45"
-					value="<c:out value='${costumer.city}' />" />
+					value="<c:out value='${customer.city}' />" />
 				</td>
 			</tr>
 			<tr>
 				<th>Grade:</th>
-				<td><input type="text" name="commission" size="5"
-					value="<c:out value='${costumer.grade}' />" />
+				<td><input type="number" name="grade" size="5"
+					value="<c:out value='${customer.grade}' />" />
 				</td>
 			</tr>
 			<tr>
 				<th>Salesman Id:</th>
-				<td><input type="text" name="commission" size="5"
-					value="<c:out value='${costumer.salesmanId}' />" />
+				<td><input type="number" name="salesmanId" size="5"
+					value="<c:out value='${customer.salesmanId}' />" />
 				</td>
 			</tr>
 			<tr>

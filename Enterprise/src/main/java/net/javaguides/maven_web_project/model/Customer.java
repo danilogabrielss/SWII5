@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
-public class Costumer {
+public class Customer {
 
 	private int id;
 	private String custName;
@@ -15,7 +15,7 @@ public class Costumer {
 	private int grade;
 	private int salesmanId;
 	
-	public Costumer(int id, String custName, String city, int grade, int salesmanId) {
+	public Customer(int id, String custName, String city, int grade, int salesmanId) {
 		this.id = id;
 		this.custName = custName;
 		this.city = city;
@@ -23,14 +23,14 @@ public class Costumer {
 		this.salesmanId = salesmanId;
 	}
 	
-	public Costumer(String custName, String city, int grade, int salesmanId) {
+	public Customer(String custName, String city, int grade, int salesmanId) {
 		this.custName = custName;
 		this.city = city;
 		this.grade = grade;
 		this.salesmanId = salesmanId;
 	}
 	
-	public Costumer(int id) {
+	public Customer(int id) {
 		this.id = id;
 	}
 	

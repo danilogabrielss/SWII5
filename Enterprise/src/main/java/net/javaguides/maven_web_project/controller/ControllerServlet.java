@@ -2,6 +2,7 @@ package net.javaguides.maven_web_project.controller;
 
 import java.io.IOException;
 import java.sql.SQLException;
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.RequestDispatcher;
@@ -10,9 +11,11 @@ import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import net.javaguides.maven_web_project.dao.CostumerDao;
+import net.javaguides.maven_web_project.dao.CustomerDao;
+import net.javaguides.maven_web_project.dao.OrdersDao;
 import net.javaguides.maven_web_project.dao.SalesmanDao;
-import net.javaguides.maven_web_project.model.Costumer;
+import net.javaguides.maven_web_project.model.Customer;
+import net.javaguides.maven_web_project.model.Orders;
 import net.javaguides.maven_web_project.model.Salesman;
 
 public class ControllerServlet extends HttpServlet {
@@ -20,7 +23,9 @@ public class ControllerServlet extends HttpServlet {
 
 	private SalesmanDao salesmanDao;
 
-	private CostumerDao costumerDao;
+	private CustomerDao customerDao;
+	
+	private OrdersDao ordersDao;
 
 	public void init() {
 		String jdbcURL = getServletContext().getInitParameter("jdbcURL") + "?useTimezone=true&serverTimezone=UTC";
@@ -28,6 +33,8 @@ public class ControllerServlet extends HttpServlet {
 		String jdbcPassword = getServletContext().getInitParameter("jdbcPassword");
 
 		salesmanDao = new SalesmanDao(jdbcURL, jdbcUsername, jdbcPassword);
+		customerDao = new CustomerDao(jdbcURL, jdbcUsername, jdbcPassword);
+		ordersDao = new OrdersDao(jdbcURL, jdbcUsername, jdbcPassword);
 
 	}
 
@@ -66,24 +73,44 @@ public class ControllerServlet extends HttpServlet {
 				deleteSalesman(request, response);
 				break;
 
-			// Costumer
-			case "/listCostumer":
-				listCostumer(request, response);
+			// Customer
+			case "/listCustomer":
+				listCustomer(request, response);
 				break;
-			case "/newCostumer":
-				newCostumer(request, response);
+			case "/newCustomer":
+				newCustomer(request, response);
 				break;
-			case "/editCostumer":
-				editCostumer(request, response);
+			case "/editCustomer":
+				editCustomer(request, response);
 				break;
-			case "/updateCostumer":
-				updateCostumer(request, response);
+			case "/updateCustomer":
+				updateCustomer(request, response);
 				break;
-			case "/insertCostumer":
-				insertCostumer(request, response);
+			case "/insertCustomer":
+				insertCustomer(request, response);
 				break;
-			case "/deleteCostumer":
-				deleteCostumer(request, response);
+			case "/deleteCustomer":
+				deleteCustomer(request, response);
+				break;
+
+			// Customer
+			case "/listOrders":
+				listOrders(request, response);
+				break;
+			case "/newOrders":
+				newOrders(request, response);
+				break;
+			case "/editOrders":
+				editOrders(request, response);
+				break;
+			case "/updateOrders":
+				updateOrders(request, response);
+				break;
+			case "/insertOrders":
+				insertOrders(request, response);
+				break;
+			case "/deleteOrders":
+				deleteOrders(request, response);
 				break;
 
 			/*
@@ -165,32 +192,32 @@ public class ControllerServlet extends HttpServlet {
 	}
 
 	// Costumer
-	private void listCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void listCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException, ServletException {
-		List<Costumer> costumerList = costumerDao.listAllCostumer();
-		request.setAttribute("costumerList", costumerList);
+		List<Customer> customerList = customerDao.listAllCustomer();
+		request.setAttribute("customerList", customerList);
 
-		RequestDispatcher dispatcher = request.getRequestDispatcher("CostumerList.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerList.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	private void newCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void newCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		RequestDispatcher dispatcher = request.getRequestDispatcher("CostumerForm.jsp");
+		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerForm.jsp");
 		dispatcher.forward(request, response);
 	}
 
-	private void editCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void editCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, ServletException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
-		Costumer existingCostumer = costumerDao.getCostumer(id);
-		RequestDispatcher dispatcher = request.getRequestDispatcher("CostumerForm.jsp");
-		request.setAttribute("costumer", existingCostumer);
+		Customer existingCustomer = customerDao.getCustomer(id);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("CustomerForm.jsp");
+		request.setAttribute("customer", existingCustomer);
 		dispatcher.forward(request, response);
 
 	}
 
-	private void updateCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void updateCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 		String custName = request.getParameter("custName");
@@ -198,32 +225,93 @@ public class ControllerServlet extends HttpServlet {
 		int grade = Integer.parseInt(request.getParameter("grade"));
 		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
 
-		Costumer costumer = new Costumer(id, custName, city, grade, salesmanId);
-		costumerDao.updateCostumer(costumer);
-		response.sendRedirect("index");
+		Customer customer = new Customer(id, custName, city, grade, salesmanId);
+		customerDao.updateCustomer(customer);
+		response.sendRedirect("listCustomer");
 	}
 
-	private void insertCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void insertCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		String custName = request.getParameter("custName");
 		String city = request.getParameter("city");
 		int grade = Integer.parseInt(request.getParameter("grade"));
 		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
 
-		Costumer newCostumer = new Costumer(custName, city, grade, salesmanId);
-		costumerDao.insertCostumer(newCostumer);
-		response.sendRedirect("index");
+		Customer newCustomer = new Customer(custName, city, grade, salesmanId);
+		customerDao.insertCustomer(newCustomer);
+		response.sendRedirect("listCustomer");
 	}
 
-	private void deleteCostumer(HttpServletRequest request, HttpServletResponse response)
+	private void deleteCustomer(HttpServletRequest request, HttpServletResponse response)
 			throws SQLException, IOException {
 		int id = Integer.parseInt(request.getParameter("id"));
 
-		Costumer costumer = new Costumer(id);
-		costumerDao.deleteCostumer(costumer);
-		response.sendRedirect("index");
+		Customer customer = new Customer(id);
+		customerDao.deleteCustomer(customer);
+		response.sendRedirect("listCustomer");
+	}
+		
+	//Orders	
+	private void listOrders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException, ServletException {
+		List<Orders> ordersList = ordersDao.listAllOrders();
+		request.setAttribute("ordersList", ordersList);
+
+		RequestDispatcher dispatcher = request.getRequestDispatcher("OrdersList.jsp");
+		dispatcher.forward(request, response);
 	}
 
+	private void newOrders(HttpServletRequest request, HttpServletResponse response)
+			throws ServletException, IOException {
+		RequestDispatcher dispatcher = request.getRequestDispatcher("OrdersForm.jsp");
+		dispatcher.forward(request, response);
+	}
+
+	private void editOrders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, ServletException, IOException {
+		int ordNo = Integer.parseInt(request.getParameter("ordNo"));
+		Orders existingOrders= ordersDao.getOrders(ordNo);
+		RequestDispatcher dispatcher = request.getRequestDispatcher("OrdersForm.jsp");
+		request.setAttribute("orders", existingOrders);
+		dispatcher.forward(request, response);
+
+	}
+
+	private void updateOrders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		/*int ordNo = Integer.parseInt(request.getParameter("ordNo"));
+		double purchase = Double.parseDouble(request.getParameter("purchase"));
+		Date ordDate = Date.parse(request.getParameter("ordDate"));
+		int costumerId = Integer.parseInt(request.getParameter("costumerId"));
+		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
+
+		Orders orders = new Orders(ordNo, purchase, ordDate, costumerId, salesmanId);
+		ordersDao.updateOrders(orders);*/
+		response.sendRedirect("listOrders");
+	}
+
+	private void insertOrders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		double purchase = Double.parseDouble(request.getParameter("purchase"));
+		String ordDate = (request.getParameter("ordDate"));
+		int costumerId = Integer.parseInt(request.getParameter("costumerId"));
+		int salesmanId = Integer.parseInt(request.getParameter("salesmanId"));
+
+		Orders newOrders = new Orders(purchase, ordDate, costumerId, salesmanId);
+		ordersDao.insertOrders(newOrders);
+		response.sendRedirect("listCustomer");
+	}
+
+	private void deleteOrders(HttpServletRequest request, HttpServletResponse response)
+			throws SQLException, IOException {
+		int ordNo = Integer.parseInt(request.getParameter("ordNo"));
+
+		Orders orders = new Orders(ordNo);
+		ordersDao.deleteOrders(orders);
+		response.sendRedirect("listCustomer");
+	}
+		
+	
 	/*
 	 * private void abrirCreditos(HttpServletRequest request, HttpServletResponse
 	 * response) throws IOException, ServletException { RequestDispatcher dispatcher
